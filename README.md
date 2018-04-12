@@ -10,3 +10,10 @@ Python 3.6
 * *treetaggerwrapper* : text preprocessing (tokenization and lemmatization in French) 
 http://treetaggerwrapper.readthedocs.io/en/latest/
 * *sklearn* : text processing (TFIDF and clustering)
+
+
+# Analyses ideas
+
+* proximité entre auteurs
+* clusterisation et découverte de similarité entre poèmes -> thèmes ? vocabulaire ?
+* prédiciton période écriture
