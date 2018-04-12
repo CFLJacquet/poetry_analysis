@@ -68,7 +68,7 @@ if len(args) > 0:
 
 # #############################################################################
 
-with open('poems_text.json') as f:
+with open('data/poems_text.json') as f:
     data = json.load(f)
 
 print("%d poèmes\n" % len(data))
@@ -83,19 +83,16 @@ t0 = time()
 if opts.use_hashing:
     if opts.use_idf:
         # Perform an IDF normalization on the output of HashingVectorizer
-        hasher = HashingVectorizer(n_features=opts.n_features,
-                                   stop_words='french', alternate_sign=False,
+        hasher = HashingVectorizer(n_features=opts.n_features, alternate_sign=False,
                                    norm=None, binary=False)
         vectorizer = make_pipeline(hasher, TfidfTransformer())
     else:
         vectorizer = HashingVectorizer(n_features=opts.n_features,
-                                       stop_words='french',
                                        alternate_sign=False, norm='l2',
                                        binary=False)
 else:
     vectorizer = TfidfVectorizer(max_df=0.5, max_features=opts.n_features,
-                                 min_df=2, stop_words='french',
-                                 use_idf=opts.use_idf)
+                                 min_df=2, use_idf=opts.use_idf)
 X = vectorizer.fit_transform(data)
 
 X = vectorizer.fit_transform(data)
@@ -167,3 +164,15 @@ if not opts.use_hashing:
         for ind in order_centroids[i, :10]:
             print(' %s' % terms[ind], end='')
         print()
+    
+
+    # Récupération des résultats
+    clusters = km.labels_
+    with open("data/poems_extracted.json") as f :
+        full_data = json.load(f)
+
+    for i, elt in enumerate(full_data) :
+        elt["cluster"] = str(clusters[i])
+    
+    with open("data/poems_clustered.json", "w") as f :
+        json.dump(full_data, f)
