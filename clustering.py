@@ -16,8 +16,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Normalizer
 from sklearn import metrics
 
-from preprocessing import NLTKPreprocessor
-
 from sklearn.cluster import KMeans, MiniBatchKMeans
 
 import logging
@@ -70,13 +68,10 @@ if len(args) > 0:
 
 # #############################################################################
 
-with open('data_exhibition.json') as f:
-    dataset = json.load(f)
+with open('poems_text.json') as f:
+    data = json.load(f)
 
-data = [elt['summary'] for elt in dataset]
-
-print("%d documents" % len(data))
-print()
+print("%d poèmes\n" % len(data))
 
 # nombre de clusters qu'on souhaite obtenir, 10 choisi au hasard
 true_k = 10
@@ -84,30 +79,26 @@ true_k = 10
 print("Extracting features from the training dataset using a sparse vectorizer")
 t0 = time()
 
-# création du tokenizer/lemmatiseur
-preprocessor = NLTKPreprocessor()
 
 if opts.use_hashing:
     if opts.use_idf:
         # Perform an IDF normalization on the output of HashingVectorizer
         hasher = HashingVectorizer(n_features=opts.n_features,
-                                   stop_words='english', alternate_sign=False,
+                                   stop_words='french', alternate_sign=False,
                                    norm=None, binary=False)
         vectorizer = make_pipeline(hasher, TfidfTransformer())
     else:
         vectorizer = HashingVectorizer(n_features=opts.n_features,
-                                       stop_words='english',
+                                       stop_words='french',
                                        alternate_sign=False, norm='l2',
                                        binary=False)
 else:
-    model = Pipeline([
-            ('preprocessor', NLTKPreprocessor()),
-            ('vectorizer', TfidfVectorizer(max_df=0.5, max_features=opts.n_features,
-                                 min_df=2, stop_words='english',
-                                 use_idf=opts.use_idf)),
-        ])
+    vectorizer = TfidfVectorizer(max_df=0.5, max_features=opts.n_features,
+                                 min_df=2, stop_words='french',
+                                 use_idf=opts.use_idf)
+X = vectorizer.fit_transform(data)
 
-X = model.fit_transform(data)
+X = vectorizer.fit_transform(data)
 
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X.shape)
@@ -170,7 +161,7 @@ if not opts.use_hashing:
     else:
         order_centroids = km.cluster_centers_.argsort()[:, ::-1]
 
-    terms = model.get_feature_names()
+    terms = vectorizer.get_feature_names()
     for i in range(true_k):
         print("Cluster %d:" % i, end='')
         for ind in order_centroids[i, :10]:
