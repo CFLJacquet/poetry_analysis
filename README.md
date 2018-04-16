@@ -12,6 +12,7 @@ http://treetaggerwrapper.readthedocs.io/en/latest/
 * *sklearn* : text processing (TFIDF and clustering)
 
 
+<<<<<<< HEAD
 
 DATAMINNING
 
@@ -37,3 +38,9 @@ A FAIRE
 - Analyses grossières
 Voir s'il y a des données qui manquent
 - Le coeur du sujet
+
+# Analyses ideas
+
+* proximité entre auteurs
+* clusterisation et découverte de similarité entre poèmes -> thèmes ? vocabulaire ?
+* prédiciton période écriture
