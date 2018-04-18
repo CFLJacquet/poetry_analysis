@@ -27,7 +27,7 @@ Approche utilisateur/utilisateur ou model based
 Test modèles latents ?
 
 Classif
-Ḿethodes baśees sur des arbres de d́ecision
+Ḿethodes baśees sur des arbres de d́ecision - existe dans nltk
 Ḿethodes baśees sur des r`egles.
 Ŕeseaux de neurones.
 Ḿethodes baýesiennes
@@ -44,3 +44,9 @@ Voir s'il y a des données qui manquent
 * proximité entre auteurs
 * clusterisation et découverte de similarité entre poèmes -> thèmes ? vocabulaire ?
 * prédiciton période écriture
+
+Index(['ID', 'author', 'book', 'link_poem', 'link_theme', 'text', 'theme',
+       'title'],
+      dtype='object')
+
+jouer avec les normes pour les classifs
