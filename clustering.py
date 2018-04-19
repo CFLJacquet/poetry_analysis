@@ -1,36 +1,25 @@
-# Author: Peter Prettenhofer <peter.prettenhofer@gmail.com>
-#         Lars Buitinck
-# License: BSD 3 clause
-
 from __future__ import print_function
 
 import json
 
-from sklearn.datasets import fetch_20newsgroups
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import make_pipeline
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Normalizer
-from sklearn import metrics
-
 from sklearn.cluster import KMeans, MiniBatchKMeans
-
 import logging
 from optparse import OptionParser
 import sys
 from time import time
-
-import numpy as np
 
 
 # Display progress logs on stdout
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(message)s')
 
-# parse commandline arguments
+# for command line use : parse commandline arguments
 op = OptionParser()
 op.add_option("--lsa",
               dest="n_components", type="int",
@@ -68,12 +57,12 @@ if len(args) > 0:
 
 # #############################################################################
 
-with open('data/poems_text.json') as f:
+with open('data/poems_text_anais.json') as f:
     data = json.load(f)
 
 print("%d poèmes\n" % len(data))
 
-# nombre de clusters qu'on souhaite obtenir, 10 choisi au hasard
+# nombre de clusters qu'on souhaite obtenir, 10 choisis au hasard
 true_k = 10
 
 print("Extracting features from the training dataset using a sparse vectorizer")
@@ -166,11 +155,14 @@ if not opts.use_hashing:
 
     # Récupération des résultats
     clusters = km.labels_
-    with open("data/poems_extracted.json") as f :
+    with open("data/poems_extracted.json") as f:
         full_data = json.load(f)
 
-    for i, elt in enumerate(full_data) :
+    for i, elt in enumerate(full_data):
         elt["cluster"] = str(clusters[i])
     
-    with open("data/poems_clustered.json", "w") as f :
+    with open("./data/poems_clustered.json", "w") as f:
         json.dump(full_data, f)
+
+print(X)
+print(X.shape)
