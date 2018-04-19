@@ -17,14 +17,14 @@ X_train, X_test, y_train, y_test = train_test_split(tfidf, ids_poems, shuffle=Tr
 
 clf_dict = {
     'svm': svm.SVC(),
-    'sgd': SGDClassifier(loss='hinge'),
-    'multinomial_nb': MultinomialNB(),
-    'kneighbours': KNeighborsClassifier(n_neighbors=136),
-    'bagging': BaggingClassifier(KNeighborsClassifier(n_neighbors=136), max_samples=0.5, max_features=0.5),
-    'decision_tree': tree.DecisionTreeClassifier(),
-    'random_forest': RandomForestClassifier(n_estimators=136, max_depth=None, min_samples_split=2, random_state=0),
-    'adaboost': AdaBoostClassifier(n_estimators=136),
-    'gradient_boosting': GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0)
+    #'sgd': SGDClassifier(loss='hinge'),
+    #'multinomial_nb': MultinomialNB(),
+    #'kneighbours': KNeighborsClassifier(n_neighbors=136),
+    #'bagging': BaggingClassifier(KNeighborsClassifier(n_neighbors=136), max_samples=0.5, max_features=0.5),
+    #'decision_tree': tree.DecisionTreeClassifier(),
+    #'random_forest': RandomForestClassifier(n_estimators=136, max_depth=None, min_samples_split=2, random_state=0),
+    #'adaboost': AdaBoostClassifier(n_estimators=136),
+    #'gradient_boosting': GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0)
 }
 
 predictions = []
