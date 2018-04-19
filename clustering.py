@@ -95,8 +95,6 @@ else:
                                  min_df=2, use_idf=opts.use_idf)
 X = vectorizer.fit_transform(data)
 
-X = vectorizer.fit_transform(data)
-
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X.shape)
 print()

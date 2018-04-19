@@ -16,7 +16,7 @@ def preprocess(raw_docs_json, stopwords_list=None):
     with open(raw_docs_json, "r") as f :
         raw_documents = json.load(f)
 
-    processed_docs = [lemmatizer(tagger, "\n".join(elt["text"]), stopwords) for elt in raw_documents]
+    processed_docs = [lemmatizer(tagger, elt["text"], stopwords) for elt in raw_documents]
 
     return processed_docs
 
