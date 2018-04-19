@@ -17,12 +17,15 @@ def preprocess(raw_docs_json, stopwords_list=None):
     tagger = ttw.TreeTagger(TAGLANG='fr')
     stopwords = set(sw.words('french')) if stopwords_list==None else open(stopwords_list, 'r', encoding='utf-8').read().split("\n")
 
-    with open(raw_docs_json, "r") as f:
+    with open(raw_docs_json, "r", encoding="utf-8") as f:
         raw_documents = json.load(f)
 
-    processed_docs = [lemmatizer(tagger, elt["text"], stopwords) for elt in raw_documents]
+    for i, elt in enumerate(raw_documents):
+        elt["lemmatized_text"] = lemmatizer(tagger, elt["text"], stopwords)
+        if i%10==0:
+            print("Processed {}/{} poems".format(i, len(raw_documents)))
 
-    return processed_docs
+    return raw_documents
 
 
 def lemmatizer(tagger, document, stopwords):
@@ -61,13 +64,13 @@ def json_to_tfidf(json_path):
 
 
 if __name__ == "__main__":
-    '''a = preprocess("poems_extracted.json")
+    a = preprocess("data/poems_extracted.json")
     print(a[0])
-    with open("./data/poems_text.json", "w") as f:
+    with open("./data/processed_poems.json", "w") as f:
         json.dump(a, f)
-    '''
+    
 
-    processed = preprocess_nltk('./data/poems_extracted.json')
-    print(processed[0])
-    with open('./data/poems_text_anais.json', 'w') as f:
-        json.dump(processed, f)
+    # processed = preprocess_nltk('./data/poems_extracted.json')
+    # print(processed[0])
+    # with open('./data/poems_text_anais.json', 'w') as f:
+    #     json.dump(processed, f)

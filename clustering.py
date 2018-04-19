@@ -57,8 +57,10 @@ if len(args) > 0:
 
 # #############################################################################
 
-with open('data/poems_text_anais.json') as f:
-    data = json.load(f)
+with open('data/processed_poems.json', encoding="utf-8") as f:
+    full_data = json.load(f)
+
+data = [elt["lemmatized_text"] for elt in full_data] 
 
 print("%d poèmes\n" % len(data))
 
@@ -155,13 +157,11 @@ if not opts.use_hashing:
 
     # Récupération des résultats
     clusters = km.labels_
-    with open("data/poems_extracted.json") as f:
-        full_data = json.load(f)
 
     for i, elt in enumerate(full_data):
         elt["cluster"] = str(clusters[i])
     
-    with open("./data/poems_clustered.json", "w") as f:
+    with open("./data/poems_clustered2.json", "w") as f:
         json.dump(full_data, f)
 
 print(X)
